@@ -1,0 +1,17 @@
+{"level":"error","message":"ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NUL,\n    created_on TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)\n)' at line 8"}
+{"level":"error","message":"ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','0184625941', 'sea na location', NOW())' at line 1"}
+{"level":"error","message":"ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', '0184625941', 'sea na location', NOW())' at line 1"}
+{"level":"error","message":"ER_DUP_ENTRY: Duplicate entry 'wild@gmail.com' for key 'users.email'"}
+{"level":"error","message":"ER_DUP_ENTRY: Duplicate entry 'wild@gmail.com' for key 'users.email'"}
+{"level":"error","message":"ER_DUP_ENTRY: Duplicate entry 'wild@gmail.com' for key 'users.email'"}
+{"level":"error","message":"ER_DUP_ENTRY: Duplicate entry 'wild@gmail.com' for key 'users.email'"}
+{"level":"error","message":"ER_DUP_ENTRY: Duplicate entry 'wild@gmail.com' for key 'users.email'"}
+{"level":"error","message":"ER_DUP_ENTRY: Duplicate entry 'wild@gmail.com' for key 'users.email'"}
+{"level":"error","message":"ER_DUP_ENTRY: Duplicate entry 'wild@gmail.com' for key 'users.email'"}
+{"level":"error","message":"ER_DUP_ENTRY: Duplicate entry 'wild@gmail.com' for key 'users.email'"}
+{"level":"error","message":"ER_DUP_ENTRY: Duplicate entry 'wild2@gmail.com' for key 'users.email'"}
+{"level":"error","message":"ER_DUP_ENTRY: Duplicate entry 'wild2@gmail.com' for key 'users.email'"}
+{"level":"error","message":"ER_DUP_ENTRY: Duplicate entry 'wild2@gmail.com' for key 'users.email'"}
+{"level":"error","message":"ER_DUP_ENTRY: Duplicate entry 'wild2@gmail.com' for key 'users.email'"}
+{"level":"error","message":"ER_DUP_ENTRY: Duplicate entry 'wild2@gmail.com' for key 'users.email'"}
+{"level":"error","message":"ER_DUP_ENTRY: Duplicate entry 'wild2@gmail.com' for key 'users.email'"}
