@@ -36,10 +36,20 @@ const loginValidator =
   check('password', 'Input Password ').notEmpty().isLength({min:8}).trim()
 ]
 
-
+const propertyValidator =
+[
+  check('files', 'Please upload file').notEmpty(),
+  check('item', 'Please Input item Name').notEmpty(),
+  check('type', 'Please select type category').notEmpty(),
+  check('price', 'How much does it go for?').notEmpty(),
+  check('address', 'Input address').notEmpty(),
+  check('city', 'Select City').notEmpty(),  
+  check('state', 'Select State').notEmpty(),  
+]
 
 module.exports = {
   validate,
   userValidator,
-  loginValidator
+  loginValidator,
+  propertyValidator
 }

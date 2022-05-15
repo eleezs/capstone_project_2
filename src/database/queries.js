@@ -18,8 +18,32 @@ CREATE TABLE IF NOT EXISTS users (
 )
 `;
 
+const createTablePropertys = `
+CREATE TABLE IF NOT EXISTS propertys (
+    property_id INT PRIMARY KEY AUTO_INCREMENT,
+    item VARCHAR(255) NOT NULL,
+    type VARCHAR(50) NOT NULL,
+    status VARCHAR(50) NOT NULL DEFAULT 'Available',
+    price FLOAT NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    city VARCHAR(50) NOT NULL,
+    state VARCHAR(255) NOT NULL,
+    image_url VARCHAR(255) NOT NULL,
+    created_on TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    update_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+    user_id INT,
+    CONSTRAINT fk_users FOREIGN KEY (user_id) 
+    REFERENCES users(id)
+)
+`;
+
 const createNewUser = `
 INSERT INTO users VALUES(null, ?, ?, ?, ?, ?, ?, NOW())
+`;
+
+const createNewProperty = `
+INSERT INTO propertys(property_id, item, type, status, price, address, city, state, image_url, created_on, update_at, user_id) 
+VALUES(null, ?, ?, DEFAULT, ?, ?, ?, ?, ?, NOW(), NOW(), ?)
 `;
 
 const findUserByEmail = `
@@ -30,6 +54,8 @@ module.exports = {
     createDB,
     dropDB,
     createTableUSers,
+    createTablePropertys,
+    createNewProperty,
     createNewUser,
     findUserByEmail
 };

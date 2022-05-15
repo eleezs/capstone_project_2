@@ -19,21 +19,14 @@ const signUp = async(req, res) => {
 
     const user = new User(firstname, lastname, email, hashedPassword, phoneNumber, address);
 
-    // check if email exist
-    // let presentEmail = checkEmail(email)
-    // console.log(presentEmail)
-    // if(presentEmail){
-    //   return response( false, 400, `A user with email address '${email}' already exits`)   
-
-    // }
-
     // save to table
 
     User.create(user, (err, data) => {
       if (err) {
-        return //response(res, false, 500, {message:err.message})
+        return 
       } 
-      return response(res, true, 200, "User created successfully", {data})  
+      const token = generateToken(data.id, data.email)
+      return response(res, true, 200, "User created successfully", {token, data})  
       
     });
     
@@ -66,7 +59,7 @@ const login = async(req, res) => {
         return response(res, false, 401, 'Your email or password combination is incorrect');  
       }
     }
-    const token = generateToken(data.id);
+    const token = generateToken(data.id, data.email);
     response(res, true, 200, 'Login successful', {token, data})
     })
   }

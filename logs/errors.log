@@ -15,3 +15,16 @@
 {"level":"error","message":"ER_DUP_ENTRY: Duplicate entry 'wild2@gmail.com' for key 'users.email'"}
 {"level":"error","message":"ER_DUP_ENTRY: Duplicate entry 'wild2@gmail.com' for key 'users.email'"}
 {"level":"error","message":"ER_DUP_ENTRY: Duplicate entry 'wild2@gmail.com' for key 'users.email'"}
+{"level":"error","message":"ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'city VARCHAR(50) NOT NULL,\n    state VARCHAR(255) NOT NULL,\n    image_url VARCHA' at line 8"}
+{"level":"error","message":"ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FOREIGN KEY REFERENCES users(id),\n    created_on TIMESTAMP(6) NOT NULL DEFAULT C' at line 11"}
+{"level":"error","message":"ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CURRENT_ TIMESTAMP(6)\n    id INT FOREIGN KEY REFERENCES users(id)\n)' at line 12"}
+{"level":"error","message":"ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CURRENT_ TIMESTAMP(6),\n    id INT FOREIGN KEY REFERENCES users(id)\n)' at line 12"}
+{"level":"error","message":"ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CURRENT_ TIMESTAMP(6),\n    user_id INT FOREIGN KEY REFERENCES users(id)\n)' at line 12"}
+{"level":"error","message":"ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CURRENT_ TIMESTAMP(6),\n    UserID INT,\n    FOREIGN KEY (UserID) REFERENCES users' at line 12"}
+{"level":"error","message":"ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CURRENT_ TIMESTAMP,\n    user_id INT FOREIGN KEY REFERENCES users(id)\n)' at line 12"}
+{"level":"error","message":"ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FOREIGN KEY REFERENCES users(id)\n)' at line 12"}
+{"level":"error","message":"ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FOREIGN KEY REFERENCES users(id),\n)' at line 12"}
+{"level":"error","message":"ER_KEY_COLUMN_DOES_NOT_EXITS: Key column 'id' doesn't exist in table"}
+{"level":"error","message":"ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',  \n    REFERENCES users(id)\n)' at line 13"}
+{"level":"error","message":"connect ETIMEDOUT"}
+{"level":"error","message":"connect ETIMEDOUT"}

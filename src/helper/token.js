@@ -3,7 +3,7 @@ const { logger } = require('../helper/logger');
 require('dotenv').config()
 
 
-const generateToken= (id) => jwt.sign({ id }, process.env.JWT_SECRET, {expiresIn: '1d'});
+const generateToken= (id, email) => jwt.sign({ user_id: id, user_email: email }, process.env.JWT_SECRET, {expiresIn: '1d'});
  
 const decodeToken = (token) => {
   try{
