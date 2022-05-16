@@ -50,6 +50,10 @@ const findUserByEmail = `
 SELECT * FROM users WHERE email = ?
 `;
 
+const getAllData =`
+SELECT * FROM propertys
+`;
+
 module.exports = {
     createDB,
     dropDB,
@@ -57,5 +61,6 @@ module.exports = {
     createTablePropertys,
     createNewProperty,
     createNewUser,
-    findUserByEmail
+    findUserByEmail,
+    getAllData
 };

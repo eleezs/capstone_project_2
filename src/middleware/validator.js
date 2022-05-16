@@ -38,13 +38,13 @@ const loginValidator =
 
 const propertyValidator =
 [
-  check('files', 'Please upload file').notEmpty(),
-  check('item', 'Please Input item Name').notEmpty(),
-  check('type', 'Please select type category').notEmpty(),
-  check('price', 'How much does it go for?').notEmpty(),
-  check('address', 'Input address').notEmpty(),
-  check('city', 'Select City').notEmpty(),  
-  check('state', 'Select State').notEmpty(),  
+  check('files', 'Please upload file').not().isEmpty(),
+  check('item', 'Please Input item Name').isString(),
+  // check('type', 'Please select type category').notEmpty().isString(),
+  // check('price', 'How much does it go for?').notEmpty().isString(),
+  // check('address', 'Input address').notEmpty().isString(),
+  // check('city', 'Select City').notEmpty().isString(),  
+  // check('state', 'Select State').notEmpty().isString(),  
 ]
 
 module.exports = {
