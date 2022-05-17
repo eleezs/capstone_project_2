@@ -57,20 +57,75 @@ const createProperty = async(req, res) => {
  */
 
 const fetchAllData = async(req, res)=>{
-    // const allData = await Property.getAllData
+    try{
+        // const allData = await Property.getAllData
     db.query('SELECT * FROM propertys', (err,rows) => {
-        if(err) throw err;
-        
+        if(err) {
+            throw err;
+        }
         response(res, true, 200, 'Here is your data', rows)
-
-        // console.log('Data received from Db:');
-        // console.log(rows);
     });
     db.end()
+    }
+    catch(err) {
+        console.log(err)
+    }
 }
 
+/**
+ * get property by Id
+ * @param {id} req 
+ * @param {rows} res 
+ */
+
+const getPropertyById = async(req, res)=> {
+    try{
+        const id = Number(req.query.id)
+
+    db.query('SELECT * FROM propertys WHERE property_id =?', [id], (err,rows) => {
+        if(err) { 
+            return response(res, false, 404, `No Property with ${id} exist`)
+        };
+        response(res, true, 200, 'Here is your data', rows)
+    })
+    db.end()
+    }
+    catch(err){
+        console.log(err)
+    }
+    
+}
+
+/**
+ * Update
+ */
+const updatePropertyDetails = async(req, res) => {
+ try{
+        const property_id = req.query.id
+        const{ type, price, address, city, state} = req.body;
+        
+        let sql =  `UPDATE propertys 
+                    SET type =?, price = ?, address = ?, city = ?, state= ?
+                    WHERE property_id= ?`;
+        
+        let data = [type, price, address, city, state, property_id]
+
+        db.query(sql, data, (err, results) => {
+            if (err) {
+                console.log(err.message) 
+            };
+            console.log(results.affectedRows + " record(s) updated");
+            response(res, true, 201, 'Property Updated Successfully')
+        })
+    }
+    catch(err){
+        console.log(err)
+    }
+}
 
 module.exports= {
     createProperty,
-    fetchAllData
+    fetchAllData,
+    getPropertyById,
+    updatePropertyDetails
 }

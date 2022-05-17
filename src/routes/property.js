@@ -11,5 +11,13 @@ router.post('/create_advert', verifyToken, validate(propertyValidator),dataUploa
 // view all data
 router.get('/all_adverts', asyncHandler(property.fetchAllData));
 
+// get Property by Id
+router.get('/one_advert', asyncHandler(property.getPropertyById))
+
+// update proerty
+router.put('/one_advert/update',verifyToken, dataUpload, asyncHandler(property.updatePropertyDetails));
+
+
+
 
 module.exports = router
