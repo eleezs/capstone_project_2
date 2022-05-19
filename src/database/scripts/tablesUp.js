@@ -1,13 +1,13 @@
 const { logger } = require('../../helper/logger');
-const { createTablePropertys: createNewPropertyQuery } = require('../queries');
+const { createTableReports: createNewReportQuery } = require('../queries');
 
 (() => {    
-   require('../../config/db.config').query(createNewPropertyQuery, (err, _) => {
+   require('../../config/db.config').query(createNewReportQuery, (err, _) => {
         if (err) {
             logger.error(err.message);
             return;
         }
-        logger.info('Table property created!');
+        logger.info('Table report created!');
         process.exit(0);
     });
 })();

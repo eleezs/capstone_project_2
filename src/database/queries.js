@@ -37,6 +37,21 @@ CREATE TABLE IF NOT EXISTS propertys (
 )
 `;
 
+const createTableReports =`
+CREATE TABLE IF NOT EXISTS reports (
+    report_id INT PRIMARY KEY AUTO_INCREMENT,
+    property_id INT NOT NULL,
+    reason VARCHAR(50) NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    created_on TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    reporter INT NOT NULL,
+    CONSTRAINT fk_propertys FOREIGN KEY (property_id) 
+    REFERENCES propertys(property_id),
+    FOREIGN KEY (reporter) 
+    REFERENCES users(id)
+)
+`;
+
 const createNewUser = `
 INSERT INTO users VALUES(null, ?, ?, ?, ?, ?, ?, NOW())
 `;
@@ -46,13 +61,14 @@ INSERT INTO propertys(property_id, item, type, status, price, address, city, sta
 VALUES(null, ?, ?, DEFAULT, ?, ?, ?, ?, ?, NOW(), NOW(), ?)
 `;
 
+const createNewReport = `
+INSERT INTO  reports VALUES(null, ?, ?, ?,  NOW(),?)
+`;
+
 const findUserByEmail = `
 SELECT * FROM users WHERE email = ?
 `;
 
-const getAllData =`
-SELECT * FROM propertys
-`;
 
 module.exports = {
     createDB,
@@ -62,5 +78,6 @@ module.exports = {
     createNewProperty,
     createNewUser,
     findUserByEmail,
-    getAllData
+    createNewReport,
+    createTableReports
 };

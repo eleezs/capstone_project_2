@@ -27,13 +27,14 @@ const signUp = async(req, res) => {
         return 
       } 
       // const token = generateToken(data.id, data.email)
-      return response(res, true, 200, "User created successfully")
+      return response(res, true, 200, "User created successfully", data)
       
     });
     
   }
   catch(err){
     console.log(err)
+    response(res, false, 500, 'Internal Server Error. Try Again Soon')
   }
 }
 
@@ -64,11 +65,12 @@ const login = async(req, res) => {
       return res.cookie("access_token", token,{
         httpOnly: true,
         secure: process.env.NODE_ENV ==="production"
-      }).status(200).json({message:"Login successful"})
+      }).status(200).json({token:token})
     })   
   }
   catch(err){
     console.log(err)
+    response(res, false, 500, 'Internal Server Error')
   }
 }
 

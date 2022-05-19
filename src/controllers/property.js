@@ -2,7 +2,7 @@ const cloudinary = require('cloudinary').v2;
 const Property = require("../models/property");
 const response = require('../helper/response');
 const {decodeToken} = require('../helper/token');
-const {getAllData} = require('../database/queries');
+const {getAllData, dropDB} = require('../database/queries');
 require('dotenv').config();
 const db = require('../config/db.config')
 
@@ -19,9 +19,15 @@ cloudinary.config({
 
 const createProperty = async(req, res) => {
     try{
+        
         const file = req.files;
         let image = file[0].path
         const{ item, type, price, address, city, state} = req.body;
+
+        if(file =='' || item==""|| type =="" || price=='' || address== '' || city == '' || state == '' ){
+            return response(res, false, 404, 'All fields must be filled')
+        }
+
         let image_url;
         // upload file to cloudinary
         if(file){
@@ -43,13 +49,13 @@ const createProperty = async(req, res) => {
             if (err){
                 return
             }
-            return response(res, true, 201, 'Advert created', {data})
+            response(res, true, 201, 'Advert created', {data})
         })
     }
     catch(err){
         console.log(err)
+        response(res, false, 500, 'Something Went Wrong')
     }
-
 }
 
 /**
@@ -69,6 +75,7 @@ const fetchAllData = async(req, res)=>{
     }
     catch(err) {
         console.log(err)
+        response(res, false, 500, 'Internal Server Error')
     }
 }
 
@@ -80,7 +87,7 @@ const fetchAllData = async(req, res)=>{
 
 const getPropertyById = async(req, res)=> {
     try{
-        const id = Number(req.query.id)
+        const id = Number(req.params.id)
 
     db.query('SELECT * FROM propertys WHERE property_id =?', [id], (err,rows) => {
         if(err) { 
@@ -92,6 +99,7 @@ const getPropertyById = async(req, res)=> {
     }
     catch(err){
         console.log(err)
+        response(res, false, 500, 'Internal Server Error')
     }
     
 }
@@ -114,18 +122,96 @@ const updatePropertyDetails = async(req, res) => {
             if (err) {
                 console.log(err.message) 
             };
-            console.log(results.affectedRows + " record(s) updated");
-            response(res, true, 201, 'Property Updated Successfully')
+            // console.log(results.affectedRows + " record(s) updated");
+            response(res, true, 201, 'Property Updated Successfully', results)
         })
     }
     catch(err){
         console.log(err)
+        response(res, false, 500, 'Internal Server Error')
     }
 }
+
+/**
+ * updateSoldItem
+ */
+
+const updateSoldItem = async(req, res) => {
+    try{
+        const property_id = req.params.id
+        const { status } = req.body
+        console.log(property_id, status)
+        let sql =  `UPDATE propertys 
+                    SET status = ?
+                    WHERE property_id= ?`;
+        
+        let data = [status, property_id]
+
+        db.query(sql, data, (err, results) => {
+            if (err) {
+                console.log(err.message) 
+            };
+            console.log(results.affectedRows + " record(s) updated");
+            response(res, true, 201, 'Property status changed')
+        })
+        db.end()
+    }
+    catch(err){
+        console.log(err)
+        response(res, false, 500, 'Something went wrong while Processing')
+    }
+};
+
+/**
+ * delete Property
+ */
+const deleteSingleProperty =async(req, res) => {
+    try{
+        const property_id = req.params.id
+        console.log(property_id)
+        db.query('DELETE FROM propertys WHERE property_id =?', [property_id], (err, result)=>{
+            if(err){
+                console.log(err)
+                return response(res, false, 400, 'Something went wrong', err.message) 
+            }
+            // console.log(result.affectedRows)
+            response(res, true, 200, `Property with ${property_id} Deleted`, result)
+        })
+        db.end()
+    }
+    catch(err){
+        console.log(err)
+        response(res, false, 500, 'Something went wrong while Processing')
+    }
+};
+
+/**
+ * queryProperty
+ */
+const queryProperty = async(req, res) => {
+    try{
+        const  type  = req.query.type
+        console.log(type)
+        db.query('SELECT FROM propertys WHERE type =? ', [type], (err, result)=>{
+            if(err){
+                console.log(err)
+                return response(res, false, 400, 'Something went wrong', err.message) 
+            }
+            console.log(result)
+            response(res, true, 200, `Here are the properties with type: ${type}`, result)
+        })
+    }
+    catch(err){
+        response(res, false, 500, 'Something went wrong while Processing') 
+    }
+};
 
 module.exports= {
     createProperty,
     fetchAllData,
     getPropertyById,
-    updatePropertyDetails
+    updatePropertyDetails,
+    updateSoldItem,
+    deleteSingleProperty,
+    queryProperty
 }

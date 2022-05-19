@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 require('dotenv').config()
 
 const verifyToken = (req, res, next) => {
-  const token = req.cookies.access_token
+  const token = req.cookies.access_token || req.headers["x-access-token"];
     // req.body.token || req.query.token || req.headers["x-access-token"];
 
   if (!token) {
@@ -14,7 +14,7 @@ const verifyToken = (req, res, next) => {
     req.user = decoded;
     // console.log(decoded)
   } catch (err) {
-    return res.status(401).send("Invalid Token");
+    return res.status(401).send("Invalid Token or Expired Token");
   }
   return next();
 };

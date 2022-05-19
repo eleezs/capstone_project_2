@@ -34,7 +34,7 @@ const loginValidator =
 [
   check('email', 'Email Must not be empty').notEmpty().trim().normalizeEmail().isEmail(),
   check('password', 'Input Password ').notEmpty().isLength({min:8}).trim()
-]
+];
 
 const propertyValidator =
 [
@@ -45,11 +45,19 @@ const propertyValidator =
   // check('address', 'Input address').notEmpty().isString(),
   // check('city', 'Select City').notEmpty().isString(),  
   // check('state', 'Select State').notEmpty().isString(),  
+];
+
+const reportValidator = 
+[
+  check('reason', 'What is your reason').notEmpty(),
+  check('description', 'Kindly Explain').notEmpty()
 ]
+
 
 module.exports = {
   validate,
   userValidator,
   loginValidator,
-  propertyValidator
+  propertyValidator,
+  reportValidator
 }
