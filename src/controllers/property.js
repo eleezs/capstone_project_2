@@ -168,14 +168,12 @@ const updateSoldItem = async(req, res) => {
 const deleteSingleProperty =async(req, res) => {
     try{
         const property_id = req.params.id
-        console.log(property_id)
-        db.query('DELETE FROM propertys WHERE property_id =?', [property_id], (err, result)=>{
+        db.query('DELETE FROM propertys WHERE property_id = ?', [property_id], (err, result)=>{
             if(err){
-                console.log(err)
                 return response(res, false, 400, 'Something went wrong', err.message) 
             }
-            // console.log(result.affectedRows)
-            response(res, true, 200, `Property with ${property_id} Deleted`, result)
+            
+            response(res, true, 200, `Property with ${property_id} Deleted`)
         })
         db.end()
     }
@@ -190,14 +188,13 @@ const deleteSingleProperty =async(req, res) => {
  */
 const queryProperty = async(req, res) => {
     try{
-        const  type  = req.query.type
-        console.log(type)
-        db.query('SELECT FROM propertys WHERE type =? ', [type], (err, result)=>{
+        const type  = req.query.type
+
+        db.query(`SELECT * FROM propertys WHERE type = ?`, [type], (err, result)=>{
             if(err){
-                console.log(err)
                 return response(res, false, 400, 'Something went wrong', err.message) 
             }
-            console.log(result)
+
             response(res, true, 200, `Here are the properties with type: ${type}`, result)
         })
     }
