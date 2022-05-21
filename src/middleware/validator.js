@@ -34,12 +34,30 @@ const loginValidator =
 [
   check('email', 'Email Must not be empty').notEmpty().trim().normalizeEmail().isEmail(),
   check('password', 'Input Password ').notEmpty().isLength({min:8}).trim()
-]
+];
 
+const propertyValidator =
+[
+  check('files', 'Please upload file').not().isEmpty(),
+  check('item', 'Please Input item Name').isString(),
+  // check('type', 'Please select type category').notEmpty().isString(),
+  // check('price', 'How much does it go for?').notEmpty().isString(),
+  // check('address', 'Input address').notEmpty().isString(),
+  // check('city', 'Select City').notEmpty().isString(),  
+  // check('state', 'Select State').notEmpty().isString(),  
+];
+
+const reportValidator = 
+[
+  check('reason', 'What is your reason').notEmpty(),
+  check('description', 'Kindly Explain').notEmpty()
+]
 
 
 module.exports = {
   validate,
   userValidator,
-  loginValidator
+  loginValidator,
+  propertyValidator,
+  reportValidator
 }

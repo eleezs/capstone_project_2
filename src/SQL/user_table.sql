@@ -1,1 +1,0 @@
-SELECT * FROM `oil_propertydb`.`users` LIMIT 1000;

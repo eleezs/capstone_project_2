@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt')
 const response = require('../helper/response')
 const {generateToken} = require('../helper/token.js');
 const checkEmail = require('../middleware/checkEmail');
+const { cookie } = require('express/lib/response');
 
 
 
@@ -19,27 +20,21 @@ const signUp = async(req, res) => {
 
     const user = new User(firstname, lastname, email, hashedPassword, phoneNumber, address);
 
-    // check if email exist
-    // let presentEmail = checkEmail(email)
-    // console.log(presentEmail)
-    // if(presentEmail){
-    //   return response( false, 400, `A user with email address '${email}' already exits`)   
-
-    // }
-
     // save to table
 
     User.create(user, (err, data) => {
       if (err) {
-        return //response(res, false, 500, {message:err.message})
+        return 
       } 
-      return response(res, true, 200, "User created successfully", {data})  
+      // const token = generateToken(data.id, data.email)
+      return response(res, true, 200, "User created successfully", data)
       
     });
     
   }
   catch(err){
     console.log(err)
+    response(res, false, 500, 'Internal Server Error. Try Again Soon')
   }
 }
 
@@ -55,28 +50,44 @@ const login = async(req, res) => {
     // check if email exist
   
     User.findByEmail(email, async(err, data) => {
-    if (err) {
-      if (err.kind === "not_found") {
-          return response (res,false, 404, `User with email ${email} was not found`)
+      if (err) {
+        if (err.kind === "not_found") {
+            return response (res,false, 404, `User with email ${email} was not found`)
+        }
       }
-    }
-    if(data){
-      const comparePassword = await bcrypt.compare(password, data.password) 
-      if(!comparePassword){
-        return response(res, false, 401, 'Your email or password combination is incorrect');  
+      if(data){
+        const comparePassword = await bcrypt.compare(password, data.password) 
+        if(!comparePassword){
+          return response(res, false, 401, 'Your email or password combination is incorrect');  
+        }
       }
-    }
-    const token = generateToken(data.id);
-    response(res, true, 200, 'Login successful', {token, data})
-    })
+      const token = generateToken(data.id, data.email);
+      return res.cookie("access_token", token,{
+        httpOnly: true,
+        secure: process.env.NODE_ENV ==="production"
+      }).status(200).json({token:token})
+    })   
   }
   catch(err){
     console.log(err)
+    response(res, false, 500, 'Internal Server Error')
   }
 }
+
+/**
+ * logout
+ */
+
+ const logout= (req, res) => {
+  return res
+    .clearCookie("access_token")
+    .status(200)
+    .json({ message: "Successfully logged out" });
+};
 
 
 module.exports = {
   signUp,
-  login
+  login,
+  logout
 }

@@ -18,18 +18,66 @@ CREATE TABLE IF NOT EXISTS users (
 )
 `;
 
+const createTablePropertys = `
+CREATE TABLE IF NOT EXISTS propertys (
+    property_id INT PRIMARY KEY AUTO_INCREMENT,
+    item VARCHAR(255) NOT NULL,
+    type VARCHAR(50) NOT NULL,
+    status VARCHAR(50) NOT NULL DEFAULT 'Available',
+    price FLOAT NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    city VARCHAR(50) NOT NULL,
+    state VARCHAR(255) NOT NULL,
+    image_url VARCHAR(255) NOT NULL,
+    created_on TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    update_at TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+    user_id INT,
+    CONSTRAINT fk_users FOREIGN KEY (user_id) 
+    REFERENCES users(id)
+)
+`;
+
+const createTableReports =`
+CREATE TABLE IF NOT EXISTS reports (
+    report_id INT PRIMARY KEY AUTO_INCREMENT,
+    property_id INT NOT NULL,
+    reason VARCHAR(50) NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    created_on TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    reporter INT NOT NULL,
+    CONSTRAINT fk_propertys FOREIGN KEY (property_id) 
+    REFERENCES propertys(property_id),
+    FOREIGN KEY (reporter) 
+    REFERENCES users(id)
+)
+`;
+
 const createNewUser = `
 INSERT INTO users VALUES(null, ?, ?, ?, ?, ?, ?, NOW())
+`;
+
+const createNewProperty = `
+INSERT INTO propertys(property_id, item, type, status, price, address, city, state, image_url, created_on, update_at, user_id) 
+VALUES(null, ?, ?, DEFAULT, ?, ?, ?, ?, ?, NOW(), NOW(), ?)
+`;
+
+const createNewReport = `
+INSERT INTO  reports VALUES(null, ?, ?, ?,  NOW(),?)
 `;
 
 const findUserByEmail = `
 SELECT * FROM users WHERE email = ?
 `;
 
+
 module.exports = {
     createDB,
     dropDB,
     createTableUSers,
+    createTablePropertys,
+    createNewProperty,
     createNewUser,
-    findUserByEmail
+    findUserByEmail,
+    createNewReport,
+    createTableReports
 };
